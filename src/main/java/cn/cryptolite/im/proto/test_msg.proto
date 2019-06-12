@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+option java_package = "cn.cryptolite.im.proto";
+option java_outer_classname = "Message";
+
+message Test {
+    CommandType cmd = 1;
+    string data = 2;
+}
+
+enum CommandType {
+    AUTH = 0;
+    PING = 1;
+    CHAT = 2;
+}
