@@ -1,5 +1,6 @@
 package cn.cryptolite.im.codec;
 
+import cn.cryptolite.im.socketcustom.MessageBuilder;
 import com.google.protobuf.MessageLite;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
@@ -53,7 +54,7 @@ public class CIMProtobufDecoder extends ByteToMessageDecoder {
       }
 
       //反序列化
-      MessageLite result = decodeBody(dataType, array, offset, readableLen);
+      MessageLite result = MessageBuilder.buildMessage(dataType, array, offset, readableLen);
       out.add(result);
     }
   }

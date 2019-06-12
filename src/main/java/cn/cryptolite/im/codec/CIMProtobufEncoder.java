@@ -1,5 +1,6 @@
 package cn.cryptolite.im.codec;
 
+import cn.cryptolite.im.socketcustom.MessageBuilder;
 import com.google.protobuf.MessageLite;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandler;
@@ -22,8 +23,9 @@ public class CIMProtobufEncoder extends MessageToByteEncoder<MessageLite> {
   }
 
   private byte[] encodeHeader(MessageLite msg, short bodyLength) {
-    byte messageType = 0x0f;
+    byte messageType = MessageBuilder.getMessageType(msg.getClass());
     /*
+    byte messageType = 0x0f;
     if (msg.getClass().getSimpleName() instanceof StockTickOuterClass.StockTick) {
       messageType = 0x00;
     } else if (msg instanceof OptionTickOuterClass.OptionTick) {
