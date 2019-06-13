@@ -6,7 +6,7 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ClientHandler extends ChannelInboundHandlerAdapter {
+public class CustomClientHandler extends ChannelInboundHandlerAdapter {
   private Logger log = LoggerFactory.getLogger(this.getClass());
 
   // 连接成功后，向server发送消息

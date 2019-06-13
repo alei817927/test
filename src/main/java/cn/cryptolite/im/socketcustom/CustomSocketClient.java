@@ -4,7 +4,7 @@ import cn.cryptolite.im.InputScanner;
 import cn.cryptolite.im.codec.CIMProtobufDecoder;
 import cn.cryptolite.im.codec.CIMProtobufEncoder;
 import cn.cryptolite.im.socket.handler.IdleHandler;
-import cn.cryptolite.im.socketcustom.handler.ClientHandler;
+import cn.cryptolite.im.socketcustom.handler.CustomClientHandler;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.TimeUnit;
 
-public class SocketClient {
+public class CustomSocketClient {
   private static int PORT = 8089;
   private static String HOST = "localhost";
 
@@ -27,7 +27,7 @@ public class SocketClient {
   private static int WRITER_IDLE_TIME_SECONDS = 20;
   private static int ALL_IDLE_TIME_SECONDS = 40;
 
-  private static Logger LOGGER = LoggerFactory.getLogger(SocketClient.class);
+  private static Logger LOGGER = LoggerFactory.getLogger(CustomSocketClient.class);
 
   public static void main(String[] args) throws InterruptedException {
     NioEventLoopGroup group = new NioEventLoopGroup();
@@ -47,7 +47,7 @@ public class SocketClient {
         p.addLast(new CIMProtobufDecoder());
         p.addLast(new CIMProtobufEncoder());
 
-        p.addLast(new ClientHandler());
+        p.addLast(new CustomClientHandler());
       }
     });
     bootstrap.remoteAddress(HOST, PORT);

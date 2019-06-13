@@ -28,6 +28,11 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 
   @Override
   public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+    System.out.println("channelRead");
+    System.out.println(msg);
+
+
+
     Message.Test test = (Message.Test) msg;
     System.out.println("服务器说：" + test.getData());
   /*

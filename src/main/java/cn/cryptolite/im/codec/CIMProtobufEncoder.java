@@ -7,6 +7,8 @@ import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
 
+import java.util.Arrays;
+
 /**
  * body长度（low）	body长度（high）	保留字节	类型
  * 参考：https://www.cnblogs.com/Binhua-Liu/p/5577622.html
@@ -17,6 +19,7 @@ public class CIMProtobufEncoder extends MessageToByteEncoder<MessageLite> {
   protected void encode(
       ChannelHandlerContext ctx, MessageLite msg, ByteBuf out) throws Exception {
     byte[] body = msg.toByteArray();
+    System.out.println(Arrays.toString(body));
     byte[] header = encodeHeader(msg, (short) body.length);
     out.writeBytes(header);
     out.writeBytes(body);

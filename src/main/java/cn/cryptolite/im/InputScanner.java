@@ -25,6 +25,7 @@ public class InputScanner {
             continue;
           }
           System.out.println("客户端说：" + str);
+//          channel.writeAndFlush(str);
           Message.Test.Builder authMsg = Message.Test.newBuilder();
           authMsg.setCmd(Message.CommandType.CHAT);
           authMsg.setData(str);

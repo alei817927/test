@@ -6,6 +6,7 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class CIMProtobufDecoder extends ByteToMessageDecoder {
@@ -55,6 +56,7 @@ public class CIMProtobufDecoder extends ByteToMessageDecoder {
 
       //反序列化
       MessageLite result = MessageBuilder.buildMessage(dataType, array, offset, readableLen);
+      System.out.println(Arrays.toString(result.toByteArray()));
       out.add(result);
     }
   }

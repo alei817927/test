@@ -8,7 +8,7 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 /**
  * see: https://www.cnblogs.com/lemon-flm/p/7813914.html
  */
-public class ServerHandler extends ChannelInboundHandlerAdapter {
+public class CustomServerHandler extends ChannelInboundHandlerAdapter {
 
   @Override
   public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {

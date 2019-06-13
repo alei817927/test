@@ -1,6 +1,8 @@
 package cn.cryptolite.im.socket;
 
 import cn.cryptolite.im.InputScanner;
+import cn.cryptolite.im.codec.CIMTextDecoder;
+import cn.cryptolite.im.codec.CIMTextEncoder;
 import cn.cryptolite.im.proto.Message;
 import cn.cryptolite.im.socket.handler.ClientHandler;
 import cn.cryptolite.im.socket.handler.IdleHandler;
@@ -47,12 +49,15 @@ public class SocketClient {
             , WRITER_IDLE_TIME_SECONDS, ALL_IDLE_TIME_SECONDS, TimeUnit.SECONDS));
         p.addLast(new IdleHandler());
 
+        p.addLast(new CIMTextDecoder());
+        p.addLast(new CIMTextEncoder());
+/*
         p.addLast(new ProtobufVarint32FrameDecoder());
         p.addLast(new ProtobufDecoder(Message.Test.getDefaultInstance()));
 
         p.addLast(new ProtobufVarint32LengthFieldPrepender());
         p.addLast(new ProtobufEncoder());
-
+*/
         p.addLast(new ClientHandler());
       }
     });

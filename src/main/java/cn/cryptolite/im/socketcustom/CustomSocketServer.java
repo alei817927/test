@@ -3,13 +3,15 @@ package cn.cryptolite.im.socketcustom;
 import cn.cryptolite.im.codec.CIMProtobufDecoder;
 import cn.cryptolite.im.codec.CIMProtobufEncoder;
 import cn.cryptolite.im.socket.handler.IdleHandler;
-import cn.cryptolite.im.socket.handler.ServerHandler;
+import cn.cryptolite.im.socketcustom.handler.CustomServerHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.logging.LogLevel;
+import io.netty.handler.logging.LoggingHandler;
 import io.netty.handler.timeout.IdleStateHandler;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -19,7 +21,7 @@ import javax.annotation.PreDestroy;
 import java.util.concurrent.TimeUnit;
 
 @Component
-public class SocketServer {
+public class CustomSocketServer {
   @Value("${socketcustom.port}")
   private int port;
 
@@ -38,7 +40,7 @@ public class SocketServer {
     ServerBootstrap bootstrap = new ServerBootstrap();
     bootstrap.group(boss, work)
         .channel(NioServerSocketChannel.class)
-//        .handler(new LoggingHandler(LogLevel.DEBUG))
+        .handler(new LoggingHandler(LogLevel.DEBUG))
         .childHandler(new ChannelInitializer<SocketChannel>() {
           @Override
           protected void initChannel(SocketChannel ch) throws Exception {
@@ -49,10 +51,13 @@ public class SocketServer {
                 , writerIdleTime, allIdleTime, TimeUnit.SECONDS));
             p.addLast(new IdleHandler());
 
+            p.addLast(new LoggingHandler(LogLevel.INFO));
             p.addLast(new CIMProtobufDecoder());
+            p.addLast(new LoggingHandler(LogLevel.INFO));
             p.addLast(new CIMProtobufEncoder());
 
-            p.addLast(new ServerHandler());
+//            p.addLast(new LoggingHandler(LogLevel.INFO));
+            p.addLast(new CustomServerHandler());
           }
         });
     bootstrap.bind(port).sync().channel().closeFuture().sync().channel();
